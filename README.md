@@ -13,30 +13,21 @@ An Android app that translates Indian Sign Language (ISL) hand gestures into tex
 - **Sentence Management**: Add letters, delete last character, add spaces, and clear sentence.
 
 ## Folder Structure
-ISL-Sign-Language-Translator/
-├─ app/
-│  ├─ src/
-│  │  ├─ main/
-│  │  │  ├─ java/com/example/signtranslator/
-│  │  │  │  ├─ LandmarkAlphabetClassifier.kt
-│  │  │  │  ├─ GestureRecognizerHelper.kt
-│  │  │  │  ├─ MainActivity.kt
-│  │  │  │  ├─ MainViewModel.kt
-│  │  │  │  ├─ SentenceManager.kt
-│  │  │  │  └─ PredictionResult.kt
-│  │  │  ├─ res/
-│  │  │  │  ├─ layout/activity_main.xml
-│  │  │  │  ├─ drawable/
-│  │  │  │  ├─ mipmap/
-│  │  │  │  └─ values/
-│  │  │  └─ assets/
-│  │  │     └─ gesture_recognizer.task
-│  │  └─ AndroidManifest.xml
-├─ build.gradle
-├─ settings.gradle
-├─ gradle.properties
-├─ local.properties
-└─ README.md
+.
+├── app
+│   ├── build.gradle
+│   └── src
+│       └── main
+├── build.gradle
+├── folder_structure.txt
+├── gradle
+│   ├── gradle-daemon-jvm.properties
+│   └── wrapper
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── local.properties
+├── README.md
+└── settings.gradle
 ## How to Run
 1. Clone the repo:
 git clone https://github.com/MukundGarg/ISL-Sign-Language-Translator.git
