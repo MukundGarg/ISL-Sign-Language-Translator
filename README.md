@@ -35,11 +35,11 @@ ISL-Sign-Language-Translator/
 ├─ gradle.properties
 ├─ local.properties
 └─ README.md
-## How to Run
 
+## How to Run
 1. Clone the repo:
-```bash
 git clone https://github.com/MukundGarg/ISL-Sign-Language-Translator.git
+
 2.	Open in Android Studio (Mac/Windows/Linux).
-	3.	Build and run on an Android device.
-	4.	Grant camera permissions when prompted
+3.	Build and run on an Android device.
+4.	Grant camera permissions when prompted
