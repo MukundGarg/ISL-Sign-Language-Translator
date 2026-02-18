@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/mukundgarg/.gradle/daemon/9.2.1/com.example.signtranslator.app-mergeDebugResources-41:/layout/activity_main.xml",
+        "source": "/Users/mukundgarg/.gradle/daemon/9.2.1/com.example.signtranslator.app-main-44:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.signtranslator.app-mergeDebugResources-41:/layout/activity_main.xml",
+        "source": "com.example.signtranslator.app-main-44:/layout/activity_main.xml"
+    }
+]

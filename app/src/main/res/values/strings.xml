@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Sign Language to Text Translator</string>
+    <string name="tv_gesture_label">Gesture: </string>
+</resources>
