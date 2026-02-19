@@ -1,5 +1,30 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
+
 rootProject.name = "Sign Language to Text Translator"
 include ':app'
+
+// Including RunAnywhere SDK modules
+include ':runanywhere-kotlin'
+project(':runanywhere-kotlin').projectDir = new File('runanywhere-sdks/sdk/runanywhere-kotlin')
+
+include ':runanywhere-core-llamacpp'
+project(':runanywhere-core-llamacpp').projectDir = new File('runanywhere-sdks/sdk/runanywhere-kotlin/modules/runanywhere-core-llamacpp')
+
+include ':runanywhere-core-onnx'
+project(':runanywhere-core-onnx').projectDir = new File('runanywhere-sdks/sdk/runanywhere-kotlin/modules/runanywhere-core-onnx')
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

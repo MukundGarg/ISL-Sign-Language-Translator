@@ -10,6 +10,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/runanywhere-sdks/sdk/runanywhere-kotlin" />
+            <option value="$PROJECT_DIR$/runanywhere-sdks/sdk/runanywhere-kotlin/modules/runanywhere-core-llamacpp" />
+            <option value="$PROJECT_DIR$/runanywhere-sdks/sdk/runanywhere-kotlin/modules/runanywhere-core-onnx" />
           </set>
         </option>
       </GradleProjectSettings>
