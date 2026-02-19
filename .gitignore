@@ -11,3 +11,18 @@ local.properties
 
 # OS
 .DS_Store
+# Heap dumps
+*.hprof
+
+# Build files
+/build
+/app/build
+
+# Gradle
+.gradle
+
+# Local config
+local.properties
+
+# Mac files
+.DS_Store
