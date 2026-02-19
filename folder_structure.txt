@@ -1,0 +1,17 @@
+.
+├── app
+│   ├── build.gradle
+│   └── src
+│       └── main
+├── build.gradle
+├── folder_structure.txt
+├── gradle
+│   ├── gradle-daemon-jvm.properties
+│   └── wrapper
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── local.properties
+├── README.md
+└── settings.gradle
+
+6 directories, 9 files
