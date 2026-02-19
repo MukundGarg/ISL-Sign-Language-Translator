@@ -4,30 +4,33 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import com.example.signtranslator.databinding.ActivityMainBinding
+import com.example.isltranslator.ui.ISLTranslatorScreen
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class MainActivity : AppCompatActivity(), GestureRecognizerHelper.GestureRecognizerListener {
+class MainActivity : ComponentActivity(), GestureRecognizerHelper.GestureRecognizerListener {
 
-    private lateinit var viewBinding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var gestureRecognizerHelper: GestureRecognizerHelper
+    private var previewView: PreviewView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
-
+        
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         // GPU is attempted first; helper falls back to CPU automatically
@@ -37,38 +40,48 @@ class MainActivity : AppCompatActivity(), GestureRecognizerHelper.GestureRecogni
             currentDelegate          = GestureRecognizerHelper.DELEGATE_GPU
         )
 
-        // ── Camera permission ──────────────────────────────────────────────
-        if (allPermissionsGranted()) startCamera()
-        else requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-
-        // ── Button callbacks ───────────────────────────────────────────────
-        viewBinding.clearButton.setOnClickListener  { viewModel.clearSentence() }
-        viewBinding.deleteButton.setOnClickListener { viewModel.deleteLastCharacter() }
-        viewBinding.spaceButton.setOnClickListener  { viewModel.addSpace() }
-
-        // ── Observe UI state ───────────────────────────────────────────────
-        viewModel.uiState.observe(this) { state ->
-            // Live candidate (flickers until stable → good real-time feedback)
-            viewBinding.detectedLetterTextView.text =
-                "Detecting: ${state.rawLabel ?: "—"}  ✓ ${state.confirmedLabel ?: ""}"
-
-            viewBinding.sentenceTextView.text   = state.sentence
-            viewBinding.tvFPS.text              = "FPS: ${state.fps}"
-            viewBinding.tvInferenceTime.text    = "Inference: ${state.inferenceTime}ms"
-            viewBinding.tvMode.text             = "Mode: ${state.processingMode}"
-            viewBinding.confidenceTextView.text = "Conf: ${"%.2f".format(state.confidence)}"
+        setContent {
+            ISLTranslatorScreen(
+                viewModel = viewModel,
+                cameraPreview = { modifier ->
+                    CameraPreview(modifier)
+                }
+            )
         }
+
+        // ── Camera permission ──────────────────────────────────────────────
+        if (allPermissionsGranted()) {
+            // Camera will be started when PreviewView is created in CameraPreview Composable
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    @Composable
+    private fun CameraPreview(modifier: Modifier) {
+        AndroidView(
+            factory = { context ->
+                PreviewView(context).also {
+                    previewView = it
+                    if (allPermissionsGranted()) {
+                        startCamera()
+                    }
+                }
+            },
+            modifier = modifier
+        )
     }
 
     // ── Camera setup ───────────────────────────────────────────────────────
 
     private fun startCamera() {
+        val viewFinder = previewView ?: return
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
 
             val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
+                it.setSurfaceProvider(viewFinder.surfaceProvider)
             }
 
             val imageAnalyzer = ImageAnalysis.Builder()
